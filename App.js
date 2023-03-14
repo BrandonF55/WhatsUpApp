@@ -1,38 +1,20 @@
+import 'react-native-gesture-handler';
 import { StyleSheet, Text } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect, useState } from "react";
 import * as Font from 'expo-font';
-import 'react-native-gesture-handler';
-import SettingsScreen from "./screens/SettingsScreen";
+import AppNavigator from "./navigation/AppNavigator";
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import ChatListScreen from "./screens/ChatListScreen";
-import ChatSettingScreen from "./screens/ChatSettingScreen";
 
 SplashScreen.preventAutoHideAsync();
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
-
-const TabNavigation = () => {
-  return(
-    // bottom level navigation.
-   <Tab.Navigator> 
-      <Tab.Screen name="ChatList" component={ChatListScreen}  />
-      <Tab.Screen name="Settings" component={SettingsScreen}  />
-   </Tab.Navigator>
-  )
-}
 
 export default function App() {
 
   const [appIsLoaded, setAppIsLoaded] = useState(false);
 
   useEffect(() => {
-    
+
     const prepare = async () => {
       try {
         await Font.loadAsync({
@@ -75,22 +57,10 @@ export default function App() {
     <SafeAreaProvider
       style={styles.container}
       onLayout={onLayout}>
-   
+        <AppNavigator/>
+    
 
-        <NavigationContainer> 
-
-        <Stack.Navigator>  
-          {/* top level navigation. */}
-          <Stack.Screen name="Home" component={TabNavigation} />
-          <Stack.Screen name="ChatSettings" component={ChatSettingScreen} options={{
-            headerTitle: "Settings"
-          }}/>
-        
-        </Stack.Navigator>
-         
-         </NavigationContainer>
-      
-    </SafeAreaProvider> 
+    </SafeAreaProvider>
     // this SafeAreProvider makes it so everything doesn't go above the
     //where the battery is on your phone.
   );
@@ -100,7 +70,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
- 
+
   },
   label: {
     color: 'black',
