@@ -7,7 +7,7 @@ const ChatListScreen = props =>{
 
     return <View style={styles.container}>
         <Text> chat list screen</Text>
-        <Button title="go to settings" onPress={() => props.navigation.navigate("ChatSettings")} />
+        <Button title="go to ChatScreen" onPress={() => props.navigation.navigate("ChatScreen")} />
                      {/* we are using the react navigation tools that come with the packages to navigate to the setting screen and we access them through props. and the Navigation is already */}
     </View>
     
