@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         borderRadius: 2,
         backgroundColor: colors.nearlyWhite
-      
-
+    
     }
 });
 
