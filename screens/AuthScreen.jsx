@@ -22,6 +22,7 @@ const AuthScreen = props => {
                     style={styles.keyboardAvoidingView}
                     behavior={Platform.OS === "ios" ? "height" : undefined}
                     keyboardVerticalOffset={100}>
+                        {/* this keyboardVerticalOffset moves everything up when the keyboard appears on your phone */}
 
                     <View style={styles.imageContainer}>
                         <Image
