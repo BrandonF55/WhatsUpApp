@@ -3,41 +3,41 @@ import { View, StyleSheet, Text, TextInput } from "react-native"
 import { FontAwesome } from '@expo/vector-icons';
 import colors from "../constants/colors";
 
+
 const Input = props => {
-    return (
-        <View style={styles.container}>
-            <Text style={styles.label} >{props.label}</Text>
+    return <View style={styles.container}>
+        <Text style={styles.label}>{props.label}</Text>
 
-            <View style={styles.inputContainer}>
-
-                {
-                    props.icon && <props.iconPack
-                        //  as long as the icon property exist it will show a icon and if it doesn't it wont
-                        name={props.icon}
-                        size={props.iconSize || 15}
-                        style={styles.icon}
-
-                    />
-
-                }
-                <TextInput styles={styles.input} />
-            </View>
-
+        <View style={styles.inputContainer}>
             {
-                    props.errorText &&
-                 <View style={styles.errorContainer}>
-                 <Text style={styles.errorText}>{props.errorText}</Text>
-             </View>
-
+                props.icon && <props.iconPack
+                    name={props.icon}
+                    size={props.iconSize || 15 }
+                    style={styles.icon} />
             }
-
+            <TextInput
+                style={styles.input}/>
         </View>
-    );
-}
+
+        {
+            props.errorText &&
+            <View style={styles.errorContainer}>
+                <Text style={styles.errorText}>{props.errorText}</Text>
+            </View>
+        }
+
+    </View>
+};
 
 const styles = StyleSheet.create({
     container: {
         width: '100%'
+    },
+    label: {
+        marginVertical: 8,
+        fontFamily: 'bold',
+        letterSpacing: 0.3,
+        color: colors.textColor
     },
     inputContainer: {
         width: '100%',
@@ -46,17 +46,12 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         borderRadius: 2,
         backgroundColor: colors.nearlyWhite,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     icon: {
         marginRight: 10,
         color: colors.grey
-    },
-    label: {
-        marginVertical: 8,
-        fontFamily: 'bold',
-        letterSpacing: 0.3,
-        color: colors.textColor
     },
     input: {
         color: colors.textColor,
@@ -67,18 +62,13 @@ const styles = StyleSheet.create({
     },
     errorContainer: {
         marginVertical: 5
-
     },
     errorText: {
         color: 'red',
         fontSize: 13,
         fontFamily: 'regular',
         letterSpacing: 0.3
-
     }
-
-
-
-});
+})
 
 export default Input;
