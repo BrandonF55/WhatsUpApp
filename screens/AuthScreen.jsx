@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
     },
     keyboardAvoidingView: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        
     }
 })
 
