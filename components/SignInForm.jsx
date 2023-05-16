@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { useReducer, useCallback }  from 'react';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { validateEmail, validatePassword, validateString } from '../Utils/validationContraints';
 import { validateInput } from '../Utils/actions/formActions';
+import reducer from '../Utils/reducers/formReducer';
+
+
+const initialState = {
+    inputValidities: {
+        Email: false,
+        Password: false,
+    },
+    formIsValid : false
+
+}
 
 const SignInForm = props => {
 
-    const inputChangeHandler = (inputId, inputValue) => {
-        console.log(validateInput(inputId, inputValue))
+   
+    const [formState, dispatchFormState] = useReducer(reducer, initialState);
+
+    const inputChangeHandler = useCallback( (inputId, inputValue) => {
+      const result = validateInput(inputId, inputValue);
+      dispatchFormState({ inputId, validateResult: result }) 
 
         
-    }
+    }, [dispatchFormState])
+    // this is the dependence array. so it will only render when the dispatchFormState is called
+
 
     return (
             <>
@@ -22,7 +39,8 @@ const SignInForm = props => {
                     iconPack={Feather} 
                     autoCapitalize="none"
                     keyboardType="email-address"
-                    onInputChanged={inputChangeHandler} />
+                    onInputChanged={inputChangeHandler} 
+                    errorText={formState.inputValidities["Email"]}/>
 
                 <Input
                 id="Password"
@@ -31,12 +49,15 @@ const SignInForm = props => {
                     iconPack={FontAwesome} 
                     autoCapitalize="none"
                     secureTextEntry 
-                    onInputChanged={inputChangeHandler} />
+                    onInputChanged={inputChangeHandler}
+                    errorText={formState.inputValidities["Password"]} />
                 
                 <SubmitButton
                     title="Sign in"
                     onPress={() => console.log("Button pressed")}
-                    style={{ marginTop: 20 }}/>
+                    style={{ marginTop: 20 }}
+                   disabled={!formState.formIsValid} 
+                   />
             </>
     )
 };
