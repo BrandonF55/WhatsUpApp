@@ -23,6 +23,8 @@ const Input = props => {
                     style={styles.icon} />
             }
             <TextInput
+                { ...props }
+                // so what this is saying is that any props that are passed into Input put them in the TextInPut like password and so on
                 style={styles.input}
                 onChangeText={onChangeText}/>
         </View>

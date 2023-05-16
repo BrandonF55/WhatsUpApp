@@ -2,23 +2,36 @@ import React from 'react';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 import { Feather, FontAwesome } from '@expo/vector-icons';
+import { validateEmail, validatePassword, validateString } from '../Utils/validationContraints';
+import { validateInput } from '../Utils/actions/formActions';
 
 const SignInForm = props => {
 
+    const inputChangeHandler = (inputId, inputValue) => {
+        console.log(validateInput(inputId, inputValue))
 
-  
+        
+    }
 
     return (
             <>
                 <Input
+                id='Email'
                     label="Email"
                     icon="mail"
-                    iconPack={Feather} />
+                    iconPack={Feather} 
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    onInputChanged={inputChangeHandler} />
 
                 <Input
+                id="Password"
                     label="Password"
                     icon="lock"
-                    iconPack={FontAwesome} />
+                    iconPack={FontAwesome} 
+                    autoCapitalize="none"
+                    secureTextEntry 
+                    onInputChanged={inputChangeHandler} />
                 
                 <SubmitButton
                     title="Sign in"
@@ -29,29 +42,3 @@ const SignInForm = props => {
 };
 
 export default SignInForm;
-
-
-
-
-
-{/* <Input
-label='Email'
-icon='mail'
-iconPack={Feather}
-/>
-
-<Input
-label='Password'
-icon='lock'
-iconPack={FontAwesome}
-/>
-<SubmitButton
-title='Sign In'
-onPress={() => console.log('button pressed')}
-style={{ marginTop: 20 }}
-/>
-</>
-)
-
-
-}; */}
