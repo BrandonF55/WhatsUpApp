@@ -6,9 +6,17 @@ import { validateEmail, validatePassword, validateString } from '../Utils/valida
 
 import { validateInput } from '../Utils/actions/formActions';
 import reducer from '../Utils/reducers/formReducer';
+import { signUp } from '../Utils/actions/authActions';
 
 
 const initialState = {
+    inputValue:{
+        Firstname: "",
+        Lastname: "",
+        Email: "",
+        Password: "",
+
+    },
     inputValidities: {
         Firstname: false,
         Lastname: false,
@@ -26,14 +34,22 @@ const SignUpForm = props => {
 
     const inputChangeHandler = useCallback( (inputId, inputValue) => {
       const result = validateInput(inputId, inputValue);
-      dispatchFormState({ inputId, validateResult: result }) 
-
-        
+      dispatchFormState({ inputId, validateResult: result, inputValue })    
     }, [dispatchFormState])
     // this is the dependence array. so it will only render when the dispatchFormState is called
 
+    const authHandler = () => {
+        signUp(
+            formState.inputValues.Firstname,
+            formState.inputValues.Lastname,
+            formState.inputValues.Email,
+            formState.inputValues.Passowrd,
+        );
+
+    }
+
     return (
-            <>
+            <>                      
                 <Input
                     id="Firstname"
                     label="First name"
@@ -76,7 +92,7 @@ const SignUpForm = props => {
                 
                 <SubmitButton
                     title="Sign up"
-                    onPress={() => console.log("Button pressed")}
+                    onPress={authHandler }
                     style={{ marginTop: 20 }}
                     disable={!formState.formIsValid}/>
             </>

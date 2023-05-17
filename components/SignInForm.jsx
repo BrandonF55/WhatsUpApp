@@ -8,6 +8,12 @@ import reducer from '../Utils/reducers/formReducer';
 
 
 const initialState = {
+    inputValue:{
+        Email: "",
+        Password: "",
+
+    },
+    
     inputValidities: {
         Email: false,
         Password: false,
@@ -23,7 +29,7 @@ const SignInForm = props => {
 
     const inputChangeHandler = useCallback( (inputId, inputValue) => {
       const result = validateInput(inputId, inputValue);
-      dispatchFormState({ inputId, validateResult: result }) 
+      dispatchFormState({ inputId, validateResult: result, inputValue }) 
 
         
     }, [dispatchFormState])

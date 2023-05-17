@@ -1,5 +1,12 @@
 const reducer = (state, action) => {
-    const { validateResult, inputId } = action;
+    const { validateResult, inputId, inputValue } = action;
+
+
+    const updateValues = {
+        ...state.inputValues,
+        [inputId]: inputValue,
+     };
+ 
 
 
     const updateValidities = {
@@ -18,6 +25,7 @@ const reducer = (state, action) => {
     }
 
     return {
+        inputValues:  updateValues,
         inputValidities: updateValidities,
         formIsValid: updateFormIsValid
     }
