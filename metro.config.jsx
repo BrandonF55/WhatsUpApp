@@ -8,3 +8,4 @@ config.resolver.assetExts.push(
 );
 
 module.exports = config;
+// this component was added because in the Udemy course there was a issue with install firebase and this fixed it in the video. I added it just in case it was needed but i didn't get the error on my side with firebase.
