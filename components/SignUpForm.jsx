@@ -9,7 +9,7 @@ import reducer from '../Utils/reducers/formReducer';
 import { signUp } from '../Utils/actions/authActions';
 import { ActivityIndicator, Alert } from 'react-native';
 import colors from '../constants/colors';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
@@ -34,6 +34,7 @@ const initialState = {
 const SignUpForm = props => {
 
     const dispatch = useDispatch();
+   
 
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
@@ -56,13 +57,12 @@ const SignUpForm = props => {
         try {
             setIsLoading(true);
             const action = signUp (
-                signUp(
                     formState.inputValues.Firstname,
                     formState.inputValues.Lastname,
                     formState.inputValues.Email,
                     formState.inputValues.Password,
-                )
-            )
+                );
+            
             dispatch (action);
             setError(null);
         } catch (error) {
