@@ -9,6 +9,7 @@ import reducer from '../Utils/reducers/formReducer';
 import { signUp } from '../Utils/actions/authActions';
 import { ActivityIndicator, Alert } from 'react-native';
 import colors from '../constants/colors';
+import { useDispatch } from 'react-redux';
 
 
 
@@ -32,6 +33,8 @@ const initialState = {
 
 const SignUpForm = props => {
 
+    const dispatch = useDispatch();
+
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
@@ -52,12 +55,15 @@ const SignUpForm = props => {
     const authHandler = async () => {
         try {
             setIsLoading(true);
-            await signUp(
-                formState.inputValues.Firstname,
-                formState.inputValues.Lastname,
-                formState.inputValues.Email,
-                formState.inputValues.Password,
-            );
+            const action = signUp (
+                signUp(
+                    formState.inputValues.Firstname,
+                    formState.inputValues.Lastname,
+                    formState.inputValues.Email,
+                    formState.inputValues.Password,
+                )
+            )
+            dispatch (action);
             setError(null);
         } catch (error) {
             setError(error.message);

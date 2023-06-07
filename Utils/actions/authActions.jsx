@@ -1,35 +1,40 @@
 
-import { getFirebaseApp } from  '../firebaseHelper';
+import { getFirebaseApp } from '../firebaseHelper';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-import { getDatabase, set, child, ref } from  'firebase/database';
+import { getDatabase, set, child, ref } from 'firebase/database';
 import { async } from 'validate.js';
+import { authenticate } from '../../store/authSlice';
 
-export const signUp = async (Firstname, Lastname, Email, Password) => {
+export const signUp = (Firstname, Lastname, Email, Password) => {
+    return async dispatch => {
+        const app = getFirebaseApp();
+        const auth = getAuth(app);
 
-    const app = getFirebaseApp();
-    const auth = getAuth(app);
+        try {
+            const result = await createUserWithEmailAndPassword(auth, Email, Password);
+            const { uid, stsTokenManager } = result.user;
+            const { accessToken } = stsTokenManager
 
-    
+            const userData = await createUser(Firstname, Lastname, Email, Password, uid)
 
-    try {
-        const result = await createUserWithEmailAndPassword(auth, Email, Password);
-        const { uid } = result.user;
+            dispatch(authenticate({token: accessToken, userData}));
+        } catch (error) {
+            const errorCode = error.code;
 
-        const userData = await createUser(Firstname, Lastname, Email, Password, uid)
+            let message = 'Something Went Wrong!'
 
-        console.log(userData)
-    } catch (error) {
-        const errorCode = error.code;
+            if (errorCode === 'auth/email-already-in-use') {
+                message = "This email is already in use!"
+            }
 
-        let message = 'Something Went Wrong!'
-        
-        if (errorCode === 'auth/email-already-in-use') {
-            message = "This email is already in use!"
+            throw new Error(message);
         }
-
-        throw new Error(message);
     }
+
 }
+
+
+
 
 const createUser = async (Firstname, Lastname, Email, Password, userId) => {
     const firstLast = `${Firstname} ${Lastname}`.toLowerCase();
@@ -45,7 +50,7 @@ const createUser = async (Firstname, Lastname, Email, Password, userId) => {
     }
 
     const dbRef = ref(getDatabase());
-    const childRef = child(dbRef,`users/${userId}`)
+    const childRef = child(dbRef, `users/${userId}`)
     await set(childRef, userData)
     return userData;
     //  this is our reference from our database. The real time database on firebase.

@@ -6,4 +6,6 @@ export const store = configureStore({
         auth: authSlice
 
     }
-})
+});
+
+// remember that slices are pieces of reducer logic.
